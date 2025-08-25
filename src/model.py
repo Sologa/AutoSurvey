@@ -6,10 +6,11 @@ import threading
 
 class APIModel:
 
-    def __init__(self, model, api_key, api_url) -> None:
+    def __init__(self, model, api_key, api_url, organization_id=None) -> None:
         self.__api_key = api_key
         self.__api_url = api_url
         self.model = model
+        self.__organization_id = organization_id
         
     def __req(self, text, temperature, max_try = 5):
         url = f"{self.__api_url}"
@@ -24,6 +25,10 @@ class APIModel:
         'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
         'Content-Type': 'application/json'
         }
+        
+        # 如果提供了organization_id，添加到headers中
+        if self.__organization_id:
+            headers['OpenAI-Organization'] = self.__organization_id
         try:
             response = requests.request("POST", url, headers=headers, data=payload)
             return json.loads(response.text)['choices'][0]['message']['content']

@@ -10,17 +10,19 @@ from src.utils import tokenCounter
 import copy
 import json
 from src.database import database
+from src.paper_provider import PaperProvider
 from src.prompt import SUBSECTION_WRITING_PROMPT, LCE_PROMPT, CHECK_CITATION_PROMPT
 from transformers import AutoModel, AutoTokenizer,  AutoModelForSequenceClassification
 
 class subsectionWriter():
     
-    def __init__(self, model:str, api_key:str, api_url:str,  database) -> None:
+    def __init__(self, model:str, api_key:str, api_url:str,  database, paper_provider=None, organization_id=None) -> None:
         
         self.model, self.api_key, self.api_url = model, api_key, api_url
-        self.api_model = APIModel(self.model, self.api_key, self.api_url)
+        self.api_model = APIModel(self.model, self.api_key, self.api_url, organization_id=organization_id)
 
         self.db = database
+        self.paper_provider = paper_provider  # 新增的paper provider
         self.token_counter = tokenCounter()
         self.input_token_usage, self.output_token_usage = 0, 0
 
@@ -36,10 +38,17 @@ class subsectionWriter():
         for i in range(len(parsed_outline['sections'])):
             descriptions = parsed_outline['subsection_descriptions'][i]
             for d in descriptions:
-                references_ids = self.db.get_ids_from_query(d, num = rag_num, shuffle = False)
+                if self.paper_provider is not None:
+                    references_ids = self.paper_provider.get_papers_by_query(d, num = rag_num, shuffle = False)
+                else:
+                    references_ids = self.db.get_ids_from_query(d, num = rag_num, shuffle = False)
                 total_ids += references_ids
                 section_references_ids[i].append(references_ids)
-        total_references_infos = self.db.get_paper_info_from_ids(list(set(total_ids)))
+        
+        if self.paper_provider is not None:
+            total_references_infos = self.paper_provider.get_paper_info_from_ids(list(set(total_ids)))
+        else:
+            total_references_infos = self.db.get_paper_info_from_ids(list(set(total_ids)))
         temp_title_dic = {p['id']:p['title'] for p in total_references_infos}
         temp_abs_dic = {p['id']:p['abs'] for p in total_references_infos}
 

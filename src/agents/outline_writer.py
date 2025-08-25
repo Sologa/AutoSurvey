@@ -6,25 +6,31 @@ import time
 import torch
 from src.model import APIModel
 from src.database import database
+from src.paper_provider import PaperProvider
 from src.utils import tokenCounter
 from src.prompt import ROUGH_OUTLINE_PROMPT, MERGING_OUTLINE_PROMPT, SUBSECTION_OUTLINE_PROMPT, EDIT_FINAL_OUTLINE_PROMPT
 from transformers import AutoModel, AutoTokenizer,  AutoModelForSequenceClassification
 
 class outlineWriter():
     
-    def __init__(self, model:str, api_key:str, api_url:str, database) -> None:
+    def __init__(self, model:str, api_key:str, api_url:str, database, paper_provider=None, organization_id=None) -> None:
         
         self.model, self.api_key, self.api_url = model, api_key, api_url 
-        self.api_model = APIModel(self.model, self.api_key, self.api_url)
+        self.api_model = APIModel(self.model, self.api_key, self.api_url, organization_id=organization_id)
 
         self.db = database
+        self.paper_provider = paper_provider  # 新增的paper provider
         self.token_counter = tokenCounter()
         self.input_token_usage, self.output_token_usage = 0, 0
 
     def draft_outline(self, topic, reference_num = 600, chunk_size = 30000, section_num = 6):
-        # Get database
-        references_ids = self.db.get_ids_from_query(topic, num = reference_num, shuffle = True)
-        references_infos = self.db.get_paper_info_from_ids(references_ids)
+        # Get database - 优先使用paper provider，如果没有则使用原有数据库
+        if self.paper_provider is not None:
+            references_ids = self.paper_provider.get_papers_by_query(topic, num = reference_num, shuffle = True)
+            references_infos = self.paper_provider.get_paper_info_from_ids(references_ids)
+        else:
+            references_ids = self.db.get_ids_from_query(topic, num = reference_num, shuffle = True)
+            references_infos = self.db.get_paper_info_from_ids(references_ids)
 
         references_titles = [r['title'] for r in references_infos]
         references_abs = [r['abs'] for r in references_infos]
@@ -191,8 +197,12 @@ class outlineWriter():
         prompts = []
 
         for section_name, section_description in zip(survey_sections, survey_section_descriptions):
-            references_ids = self.db.get_ids_from_query(section_description, num = rag_num, shuffle = True)
-            references_infos = self.db.get_paper_info_from_ids(references_ids)
+            if self.paper_provider is not None:
+                references_ids = self.paper_provider.get_papers_by_query(section_description, num = rag_num, shuffle = True)
+                references_infos = self.paper_provider.get_paper_info_from_ids(references_ids)
+            else:
+                references_ids = self.db.get_ids_from_query(section_description, num = rag_num, shuffle = True)
+                references_infos = self.db.get_paper_info_from_ids(references_ids)
 
             references_titles = [r['title'] for r in references_infos]
             references_papers = [r['abs'] for r in references_infos]
