@@ -165,16 +165,16 @@ class subsectionWriter():
     
     def lce(self, topic, outline, contents, res_l, idx):
         '''
-        You are an expert in artificial intelligence who wants to write a overall and comprehensive survey about [TOPIC].\n\
-        You have created a overall outline below:\n\
+        You are an expert in artificial intelligence who wants to write an overall and comprehensive survey about [TOPIC].\n\
+        You have created an overall outline below:\n\
         ---
         [OVERALL OUTLINE]
         ---
         <instruction>
 
-        Now you need to help to refine one of the subsection to improve th ecoherence of your survey.
+        Now you need to help to refine one of the subsections to improve the coherence of your survey.
 
-        You are provied with the content of the subsection "[SUBSECTION NAME]" along with the previous subsections and following subsections.
+        You are provided with the content of the subsection "[SUBSECTION NAME]" along with the previous subsections and following subsections.
 
         Previous Subsection:
         --- 
@@ -198,7 +198,7 @@ class subsectionWriter():
         Please keep the essence and core information of the subsection intact. 
         </instruction>
 
-        Directly return the refined subsection without any other informations:
+        Directly return the refined subsection without any other information:
         '''
 
         prompt = self.__generate_prompt(LCE_PROMPT, paras={'OVERALL OUTLINE': outline,'PREVIOUS': contents[0],\

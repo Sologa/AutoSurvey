@@ -75,13 +75,13 @@ class outlineWriter():
 
     def generate_rough_outlines(self, topic, papers_chunks, titles_chunks, section_num = 8):
         '''
-        You wants to write a overall and comprehensive academic survey about "[TOPIC]".\n\
+        You want to write an overall and comprehensive academic survey about "[TOPIC]".\n\
         You are provided with a list of papers related to the topic below:\n\
         ---
         [PAPER LIST]
         ---
-        You need to draft a outline based on the given papers.
-        The outline should contains a title and several sections.
+        You need to draft an outline based on the given papers.
+        The outline should contain a title and several sections.
         Each section follows with a brief sentence to describe what to write in this section.
         The outline is supposed to be comprehensive and contains [SECTION NUM] sections.
 
@@ -89,15 +89,15 @@ class outlineWriter():
         <format>
         Title: [TITLE OF THE SURVEY]
         Section 1: [NAME OF SECTION 1]
-        Description 1: [DESCRIPTION OF SENTCTION 1]
+        Description 1: [DESCRIPTION OF SECTION 1]
 
         Section 2: [NAME OF SECTION 2]
-        Description 2: [DESCRIPTION OF SENTCTION 2]
+        Description 2: [DESCRIPTION OF SECTION 2]
 
         ...
 
         Section K: [NAME OF SECTION K]
-        Description K: [DESCRIPTION OF SENTCTION K]
+        Description K: [DESCRIPTION OF SECTION K]
         </format>
         The outline:
         '''
@@ -121,7 +121,7 @@ class outlineWriter():
     
     def merge_outlines(self, topic, outlines):
         '''
-        You are an expert in artificial intelligence who wants to write a overall survey about [TOPIC].\n\
+        You are an expert in artificial intelligence who wants to write an overall survey about [TOPIC].\n\
         You are provided with a list of outlines as candidates below:\n\
         ---
         [OUTLINE LIST]
@@ -133,17 +133,17 @@ class outlineWriter():
         <format>
         Title: [TITLE OF THE SURVEY]
         Section 1: [NAME OF SECTION 1]
-        Description 1: [DESCRIPTION OF SENTCTION 1]
+        Description 1: [DESCRIPTION OF SECTION 1]
 
         Section 2: [NAME OF SECTION 2]
-        Description 2: [DESCRIPTION OF SENTCTION 2]
+        Description 2: [DESCRIPTION OF SECTION 2]
 
         ...
 
         Section K: [NAME OF SECTION K]
-        Description K: [DESCRIPTION OF SENTCTION K]
+        Description K: [DESCRIPTION OF SECTION K]
         </format>
-        Only return the final outline without any other informations:
+        Only return the final outline without any other information:
         '''
         outline_texts = '' 
         for i, o in zip(range(len(outlines)), outlines):
@@ -158,8 +158,8 @@ class outlineWriter():
     
     def generate_subsection_outlines(self, topic, section_outline, rag_num):
         '''
-        You are an expert in artificial intelligence who wants to write a overall survey about [TOPIC].\n\
-        You have created a overall outline below:\n\
+        You are an expert in artificial intelligence who wants to write an overall survey about [TOPIC].\n\
+        You have created an overall outline below:\n\
         ---
         [OVERALL OUTLINE]
         ---
@@ -168,27 +168,27 @@ class outlineWriter():
         <instruction>
         You need to enrich the section [SECTION NAME].
         The description of [SECTION NAME]: [SECTION DESCRIPTION]
-        You need to generate the framwork containing several subsections based on the overall outlines.\n\
+        You need to generate the framework containing several subsections based on the overall outline.\n\
         Each subsection follows with a brief sentence to describe what to write in this subsection.
-        These papers provided for references:
+        These papers are provided for references:
         ---
         [PAPER LIST]
         ---
         Return the outline in the format:
         <format>
         Subsection 1: [NAME OF SUBSECTION 1]
-        Description 1: [DESCRIPTION OF SUBSENTCTION 1]
+        Description 1: [DESCRIPTION OF SUBSECTION 1]
 
         Subsection 2: [NAME OF SUBSECTION 2]
-        Description 2: [DESCRIPTION OF SUBSENTCTION 2]
+        Description 2: [DESCRIPTION OF SUBSECTION 2]
 
         ...
 
         Subsection K: [NAME OF SUBSECTION K]
-        Description K: [DESCRIPTION OF SUBSENTCTION K]
+        Description K: [DESCRIPTION OF SUBSECTION K]
         </format>
         </instruction>
-        Only return the outline without any other informations:
+        Only return the outline without any other information:
         '''
 
 
@@ -222,7 +222,7 @@ class outlineWriter():
 
     def edit_final_outline(self, outline):
         '''
-        You are an expert in artificial intelligence who wants to write a overall survey about [TOPIC].\n\
+        You are an expert in artificial intelligence who wants to write an overall survey about [TOPIC].\n\
         You have created a draft outline below:\n\
         ---
         [OVERALL OUTLINE]
@@ -230,7 +230,7 @@ class outlineWriter():
         The outline contains a title and several sections.\n\
         Each section follows with a brief sentence to describe what to write in this section.\n\n\
         Under each section, there are several subsections.
-        Each subsection also follows with a brief sentence of descripition.
+        Each subsection also follows with a brief sentence of description.
         You need to modify the outline to make it both comprehensive and coherent with no repeated subsections.
         Return the final outline in the format:
         <format>
@@ -254,7 +254,7 @@ class outlineWriter():
 
         ...
         </format>
-        Only return the final outline without any other informations:
+        Only return the final outline without any other information:
         '''
 
         prompt = self.__generate_prompt(EDIT_FINAL_OUTLINE_PROMPT, paras={'OVERALL OUTLINE': outline})

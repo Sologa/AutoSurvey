@@ -36,13 +36,13 @@ Only reply with 'Yes' or 'No':
 '''
 
 ROUGH_OUTLINE_PROMPT = '''
-You wants to write a overall and comprehensive academic survey about "[TOPIC]".\n\
+You want to write an overall and comprehensive academic survey about "[TOPIC]".\n\
 You are provided with a list of papers related to the topic below:\n\
 ---
 [PAPER LIST]
 ---
-You need to draft a outline based on the given papers.
-The outline should contains a title and several sections.
+You need to draft an outline based on the given papers.
+The outline should contain a title and several sections.
 Each section follows with a brief sentence to describe what to write in this section.
 The outline is supposed to be comprehensive and contains [SECTION NUM] sections.
 
@@ -50,22 +50,22 @@ Return in the format:
 <format>
 Title: [TITLE OF THE SURVEY]
 Section 1: [NAME OF SECTION 1]
-Description 1: [DESCRIPTION OF SENTCTION 1]
+Description 1: [DESCRIPTION OF SECTION 1]
 
 Section 2: [NAME OF SECTION 2]
-Description 2: [DESCRIPTION OF SENTCTION 2]
+Description 2: [DESCRIPTION OF SECTION 2]
 
 ...
 
 Section K: [NAME OF SECTION K]
-Description K: [DESCRIPTION OF SENTCTION K]
+Description K: [DESCRIPTION OF SECTION K]
 </format>
 The outline:
 '''
 
 
 MERGING_OUTLINE_PROMPT = '''
-You are an expert in artificial intelligence who wants to write a overall survey about [TOPIC].\n\
+You are an expert in artificial intelligence who wants to write an overall survey about [TOPIC].\n\
 You are provided with a list of outlines as candidates below:\n\
 ---
 [OUTLINE LIST]
@@ -73,26 +73,26 @@ You are provided with a list of outlines as candidates below:\n\
 Each outline contains a title and several sections.
 Each section follows with a brief sentence to describe what to write in this section.
 You need to generate a final outline based on these provided outlines to make the final outline show comprehensive insights of the topic and more logical.
-Return the in the format:
+Return the outline in the format:
 <format>
 Title: [TITLE OF THE SURVEY]
 Section 1: [NAME OF SECTION 1]
-Description 1: [DESCRIPTION OF SENTCTION 1]
+Description 1: [DESCRIPTION OF SECTION 1]
 
 Section 2: [NAME OF SECTION 2]
-Description 2: [DESCRIPTION OF SENTCTION 2]
+Description 2: [DESCRIPTION OF SECTION 2]
 
 ...
 
 Section K: [NAME OF SECTION K]
-Description K: [DESCRIPTION OF SENTCTION K]
+Description K: [DESCRIPTION OF SECTION K]
 </format>
-Only return the final outline without any other informations:
+Only return the final outline without any other information:
 '''
 
 SUBSECTION_OUTLINE_PROMPT = '''
-You are an expert in artificial intelligence who wants to write a overall survey about [TOPIC].\n\
-You have created a overall outline below:\n\
+You are an expert in artificial intelligence who wants to write an overall survey about [TOPIC].\n\
+You have created an overall outline below:\n\
 ---
 [OVERALL OUTLINE]
 ---
@@ -101,31 +101,31 @@ Each section follows with a brief sentence to describe what to write in this sec
 <instruction>
 You need to enrich the section [SECTION NAME].
 The description of [SECTION NAME]: [SECTION DESCRIPTION]
-You need to generate the framwork containing several subsections based on the overall outlines.\n\
+You need to generate the framework containing several subsections based on the overall outline.\n\
 Each subsection follows with a brief sentence to describe what to write in this subsection.
-These papers provided for references:
+These papers are provided for references:
 ---
 [PAPER LIST]
 ---
 Return the outline in the format:
 <format>
 Subsection 1: [NAME OF SUBSECTION 1]
-Description 1: [DESCRIPTION OF SUBSENTCTION 1]
+Description 1: [DESCRIPTION OF SUBSECTION 1]
 
 Subsection 2: [NAME OF SUBSECTION 2]
-Description 2: [DESCRIPTION OF SUBSENTCTION 2]
+Description 2: [DESCRIPTION OF SUBSECTION 2]
 
 ...
 
 Subsection K: [NAME OF SUBSECTION K]
-Description K: [DESCRIPTION OF SUBSENTCTION K]
+Description K: [DESCRIPTION OF SUBSECTION K]
 </format>
 </instruction>
-Only return the outline without any other informations:
+Only return the outline without any other information:
 '''
 
 EDIT_FINAL_OUTLINE_PROMPT = '''
-You are an expert in artificial intelligence who wants to write a overall survey about [TOPIC].\n\
+You are an expert in artificial intelligence who wants to write an overall survey about [TOPIC].\n\
 You have created a draft outline below:\n\
 ---
 [OVERALL OUTLINE]
@@ -133,8 +133,8 @@ You have created a draft outline below:\n\
 The outline contains a title and several sections.\n\
 Each section follows with a brief sentence to describe what to write in this section.\n\n\
 Under each section, there are several subsections.
-Each subsection also follows with a brief sentence of descripition.
-Some of the subsections may be repeated or overlaped.
+Each subsection also follows with a brief sentence of description.
+Some of the subsections may be repeated or overlapped.
 You need to modify the outline to make it both comprehensive and logically coherent with no repeated subsections.
 Repeated subsections among sections are not allowed!
 Return the final outline in the format:
@@ -159,12 +159,12 @@ Description: [DESCRIPTION OF SUBSECTION L]
 ...
 
 </format>
-Only return the final outline without any other informations:
+Only return the final outline without any other information:
 '''
 
 CHECK_CITATION_PROMPT = '''
-You are an expert in artificial intelligence who wants to write a overall and comprehensive survey about [TOPIC].\n\
-Below are a list of papers for references:
+You are an expert in artificial intelligence who wants to write an overall and comprehensive survey about [TOPIC].\n\
+Below is a list of papers for references:
 ---
 [PAPER LIST]
 ---
@@ -192,19 +192,19 @@ A correct citation means that, the content of corresponding paper can support th
 Once the citation can not support the sentence you write, correct the paper_title in '[]' or just remove it.
 
 Remember that you can only cite the 'paper_title' provided above!!!
-Any other informations like authors are not allowed cited!!!
+Any other information like authors is not allowed to be cited!!!
 Do not change any other things except the citations!!!
 </instruction>
 Only return the subsection with correct citations:
 '''
 
 SUBSECTION_WRITING_PROMPT = '''
-You are an expert in artificial intelligence who wants to write a overall and comprehensive survey about [TOPIC].\n\
-You have created a overall outline below:\n\
+You are an expert in artificial intelligence who wants to write an overall and comprehensive survey about [TOPIC].\n\
+You have created an overall outline below:\n\
 ---
 [OVERALL OUTLINE]
 ---
-Below are a list of papers for references:
+Below is a list of papers for references:
 ---
 [PAPER LIST]
 ---
@@ -212,7 +212,7 @@ Below are a list of papers for references:
 <instruction>
 Now you need to write the content for the subsection:
 "[SUBSECTION NAME]" under the section: "[SECTION NAME]"
-The details of what to write in this subsection called [SUBSECTION NAME] is in this descripition:
+The details of what to write in this subsection called [SUBSECTION NAME] is in this description:
 ---
 [DESCRIPTION]
 ---
@@ -222,7 +222,7 @@ Here is the requirement you must follow:
 2. When writing sentences that are based on specific papers above, you cite the "paper_title" in a '[]' format to support your content. An example of citation: 'the emergence of large language models (LLMs) [Language models are few-shot learners; PaLM: Scaling language modeling with pathways]'
     Note that the "paper_title" is not allowed to appear without a '[]' format. Once you mention the 'paper_title', it must be included in '[]'. Papers not existing above are not allowed to cite!!!
     Remember that you can only cite the paper provided above and only cite the "paper_title"!!!
-3. Only when the main part of the paper support your claims, you cite it.
+3. Only when the main part of the paper supports your claims, you cite it.
 
 
 Here's a concise guideline for when to cite papers in a survey:
@@ -246,11 +246,11 @@ Only return the content more than [WORD NUM] words you write for the subsection 
 
 
 LCE_PROMPT = '''
-You are an expert in artificial intelligence who wants to write a overall and comprehensive survey about [TOPIC].
+You are an expert in artificial intelligence who wants to write an overall and comprehensive survey about [TOPIC].
 
-Now you need to help to refine one of the subsection to improve th ecoherence of your survey.
+Now you need to help to refine one of the subsections to improve the coherence of your survey.
 
-You are provied with the content of the subsection along with the previous subsections and following subsections.
+You are provided with the content of the subsection along with the previous subsections and following subsections.
 
 Previous Subsection:
 --- 
@@ -275,7 +275,7 @@ Now refine the subsection to enhance coherence, and ensure that the content of t
 
 Remember that keep all the essence and core information of the subsection intact. Do not modify any citations in [] following the sentences.
 
-Only return the whole refined content of the subsection without any other informations (like "Here is the refined subsection:")!
+Only return the whole refined content of the subsection without any other information (like "Here is the refined subsection:")!
 
 The subsection content:
 '''
